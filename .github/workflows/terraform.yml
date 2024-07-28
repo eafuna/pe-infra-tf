@@ -24,6 +24,15 @@ jobs:
       # Checkout project code
       # Use sparse checkout to only select files in mobile app directory
       # Turning off cone mode ensures that files in the project root are not included during checkout
+      - uses: azure/login@v2
+
+      - name: Azure CLI script
+        uses: azure/cli@v2
+        with:
+          azcliversion: latest
+          inlineScript: |
+            az account show      
+
       - uses: actions/checkout@v3
         with:
           sparse-checkout: 'aks'
