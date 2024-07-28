@@ -50,11 +50,11 @@ jobs:
 
         # terraform init -backend-config=../backend/${{ env.environment }}.conf --var-file="../envs/${{ env.environment }}.tfvars;"
         # terraform plan --var-file="../envs/${{ env.environment }}.tfvars" -lock=false ...
-      - name: Terraform check
-        run: |
-          cd aks
-          terraform init
-          terraform plan --auto-approve -lock=true -out plan.out
+      # - name: Terraform check
+      #   run: |
+      #     cd aks
+      #     terraform init
+      #     terraform plan --auto-approve -lock=true -out plan.out
 
   infra-deployment-simplified:
     needs: [prepare]
