@@ -6,6 +6,10 @@
 *.tfstate.*
 *.terraform.lock.*
 
+# python 
+*/__pycache__/*
+.env
+
 # Crash log files
 crash.log
 crash.*.log
