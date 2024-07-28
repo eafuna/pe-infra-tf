@@ -62,6 +62,7 @@ jobs:
         # Idealy this should be separated along with other options that will create based on environment
         # terraform apply --auto-approve --var-file="../envs/${{ env.environment }}.tfvars" -lock=false
         run: |
+          cd aks
           ls
 
       - name: Terraform destroy
@@ -70,9 +71,11 @@ jobs:
         # Idealy this should be separated along with other options that will create based on environment
         # terraform apply --auto-approve --var-file="../envs/${{ env.environment }}.tfvars" -lock=false
         run: |
+          cd aks
           echo "I am destroy"
 
   release:
+    if: contains(github.event.head_commit.message, '#somerule')
     runs-on: ubuntu-latest
     needs: prepare 
     steps:
