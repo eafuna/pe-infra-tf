@@ -21,12 +21,6 @@ on:
 jobs:
   application-deployment-simplified:
     runs-on: ubuntu-latest
-    env:
-      ARM_CLIENT_ID: ${{secrets.ARM_CLIENT_ID}}
-      ARM_CLIENT_SECRET: ${{secrets.ARM_CLIENT_SECRET}}
-      ARM_SUBSCRIPTION_ID: ${{secrets.ARM_SUBSCRIPTION_ID}}
-      ARM_TENANT_ID: ${{secrets.ARM_TENANT_ID}} 
-
     steps:
       - uses: azure/login@v2
         with:
@@ -37,12 +31,14 @@ jobs:
           sparse-checkout: 'application'
           sparse-checkout-cone-mode: false
           
-      - name: 'Build and push image'
+      - name: 'Azure docker login'
         uses: azure/docker-login@v1
         with:
           login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
+             
+      - name: 'Build and push image'    
         run: |
           cd application
           ls
@@ -51,7 +47,6 @@ jobs:
           docker push developmentdemoacr.azurecr.io/serverapp:${{ github.sha }}
           docker tag serverapp:${{ github.sha }} developmentdemoacr.azurecr.io/serverapp:latest
           docker push developmentdemoacr.azurecr.io/serverapp:latest
-
           az acr list
 
       # - name: 'Build and push image'
