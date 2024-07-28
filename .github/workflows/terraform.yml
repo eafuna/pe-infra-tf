@@ -20,7 +20,7 @@ on:
    
 jobs:
   infra-deployment-simplified:
-    if ${{ contains(github.event.head_commit.message, '#build') }}    
+    if: ${{ contains(github.event.head_commit.message, '#build') }}    
     runs-on: ubuntu-latest
     env:
       ARM_CLIENT_ID: ${{secrets.ARM_CLIENT_ID}}
