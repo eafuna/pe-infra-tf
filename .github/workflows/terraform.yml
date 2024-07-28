@@ -73,7 +73,7 @@ jobs:
           terraform apply --auto-approve -lock=true 
 
       - name: Terraform destroy
-        if: contains(github.event.head_commit.message, '#destroy')
+        if: ${{ (github.event_name == 'push') && (contains(github.event.head_commit.message, '#destroy')) && !(github.ref == 'refs/heads/main') }}
 
         run: |
           cd aks
