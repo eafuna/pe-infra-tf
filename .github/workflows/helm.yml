@@ -1,0 +1,39 @@
+name: Helm deploy
+
+on:
+  # idealy this should be prevented by protecting branches on github
+  push:
+    branches:
+      - "main"
+    paths:
+      - 'charts/**'
+      - '.github/workflows/helm.yml'
+
+  pull_request:
+    branches:
+      - "main"
+    paths:
+      - 'charts/**'
+      - '.github/workflows/helm.yml'
+
+  workflow_dispatch:
+   
+jobs:
+  helm-deployment-simplified:
+    runs-on: ubuntu-latest
+    env:
+      ARM_CLIENT_ID: ${{secrets.ARM_CLIENT_ID}}
+      ARM_CLIENT_SECRET: ${{secrets.ARM_CLIENT_SECRET}}
+      ARM_SUBSCRIPTION_ID: ${{secrets.ARM_SUBSCRIPTION_ID}}
+      ARM_TENANT_ID: ${{secrets.ARM_TENANT_ID}} 
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          sparse-checkout: 'helm'
+          sparse-checkout-cone-mode: false
+
+        run: |
+          cd helm
+          ls
+          
