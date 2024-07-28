@@ -52,7 +52,7 @@ jobs:
         # terraform plan --var-file="../envs/${{ env.environment }}.tfvars" -lock=false ...
       - name: Terraform check
         #disables plan only when branch is not main
-        if: ${{ !github.ref == 'refs/heads/main') }}
+        if: ${{ !(github.ref == 'refs/heads/main') }}
         run: |
           cd aks
           terraform init
