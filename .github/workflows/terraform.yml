@@ -15,7 +15,7 @@ on:
       - 'aks/**'
       - '.github/workflows/terraform.yml'
 
-   workflow_dispatch:
+  workflow_dispatch:
    
 jobs:
   prepare:
