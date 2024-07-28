@@ -29,9 +29,13 @@ There are three (3) simple workflows:
 
 ## charts/
 Contains the deployment of the application to the k8s
+> [!NOTE]
+> Incomplete! Deployed but for some reason I could not access its external IP. K8s pods are running with no issues as well as k8s service, sorting this out later.
 
 ## application/
 Contains the server application including the Dockerfile
+> [!NOTE]
+> Incomplete! Currently just deployed boiler plate for RESTful API and have not modified yet. As per `liveliness` and `rediness` probe, I only configured `\`. I figured this can be done later since it is a `stateless` application anyway
 
 ## aks/
 Contains IaC for terraform on AKS
@@ -45,4 +49,5 @@ Contains IaC for terraform on AKS
 
 ### Notes
 - Challenges are encountered with Azure, I was overthrown with Microsoft Entra ID which replaced Azure AD 
-- PLOP (Principle of Least Privilege) is not applied here 
+- PLOP (Principle of Least Privilege) is not applied here
+- [Terratest](https://github.com/gruntwork-io/terratest) can be used for actual implememtation for additional sanity check  
