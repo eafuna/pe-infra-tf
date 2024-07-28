@@ -54,15 +54,15 @@ jobs:
         run: |
           cd aks
           terraform init
-          terraform plan -lock=true -out plan.out
+          terraform plan -lock=false
 
       - name: Terraform deploy
-        if: contains(github.event.head_commit.message, '#deploy')
+        if: ${{ contains(github.event.head_commit.message, '#deploy') }}
               
         # Idealy this should be separated along with other options that will create based on environment
         # terraform apply --auto-approve --var-file="../envs/${{ env.environment }}.tfvars" -lock=false
         run: |
-          terraform apply --auto-approve -lock=true aks/plan.out 
+          terraform apply --auto-approve -lock=true 
 
       - name: Terraform destroy
         if: contains(github.event.head_commit.message, '#destroy')
