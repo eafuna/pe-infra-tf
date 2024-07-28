@@ -29,5 +29,10 @@ jobs:
           sparse-checkout: 'aks'
           sparse-checkout-cone-mode: false
       # - uses: actions/checkout@v2      
-      - name: Create annotation for build error
-        run: ls          
+      - name: Terraform setup
+        uses: hashicorp/setup-terraform@v1
+      - name: Terraform simplified      
+        run: |
+          cd aks
+          terraform init
+          terraform plan
