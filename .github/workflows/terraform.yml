@@ -3,15 +3,15 @@ name: Terraform deploy
 on:
   # idealy this should be prevented by protecting branches on github
   push:
-    branches:
-      - "main"
+    # branches:
+    #   - "main"
     paths:
       - 'aks/**'
       - '.github/workflows/terraform.yml'
 
   pull_request:
-    branches:
-      - "main"
+    # branches:
+    #   - "main"
     paths:
       - 'aks/**'
       - '.github/workflows/terraform.yml'
