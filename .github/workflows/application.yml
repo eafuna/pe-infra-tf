@@ -41,7 +41,12 @@ jobs:
         run: |
           cd application
           ls
-          docker build . -t developmentdemoacr.azurecr.io/serverapp:${{ github.sha }}
+          docker build . ${{ github.sha }}
+          docker tag ${{ github.sha }} developmentdemoacr.azurecr.io/serverapp:${{ github.sha }}
+          docker push developmentdemoacr.azurecr.io/serverapp:${{ github.sha }}
+          docker tag ${{ github.sha }} developmentdemoacr.azurecr.io/serverapp:latest
+          docker push developmentdemoacr.azurecr.io/serverapp:latest
+
           az acr list
 
       # - name: 'Build and push image'
