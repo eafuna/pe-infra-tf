@@ -62,6 +62,7 @@ jobs:
         # Idealy this should be separated along with other options that will create based on environment
         # terraform apply --auto-approve --var-file="../envs/${{ env.environment }}.tfvars" -lock=false
         run: |
+          cd aks
           terraform apply --auto-approve -lock=true 
 
       - name: Terraform destroy
