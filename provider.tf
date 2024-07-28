@@ -1,0 +1,26 @@
+provider "azurerm" {
+  features {}
+  skip_provider_registration = true
+}
+
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "3.75.0"
+    }
+    helm = {
+      source  = "hashicorp/helm"
+      version = ">= 2.1.0"
+    }
+  }
+
+  backend "azurerm" {
+      resource_group_name  = "tfstate"
+      storage_account_name = "tfstatejykne"
+      container_name       = "tfstate"
+      key                  = "terraform.tfstate"
+  }  
+}
+
+
