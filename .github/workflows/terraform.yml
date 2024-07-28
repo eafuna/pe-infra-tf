@@ -54,7 +54,7 @@ jobs:
         run: |
           cd aks
           terraform init
-          terraform plan --auto-approve -lock=true -out plan.out
+          terraform plan -lock=true -out plan.out
 
   # infra-deployment-simplified:
   #   needs: [prepare]
@@ -70,4 +70,10 @@ jobs:
         # terraform apply --auto-approve --var-file="../envs/${{ env.environment }}.tfvars" -lock=false
         run: |
           ls
-          
+
+  whynothere:
+    needs: prepare 
+    steps:
+    - name: this should be working
+      run: |
+        ls
