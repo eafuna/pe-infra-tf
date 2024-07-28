@@ -1,0 +1,21 @@
+name: Terraform deploy call
+
+on:
+  push:
+    branches:
+      - "main"
+    paths:
+      - 'tf/**'
+      - 'cloud_functions/**'
+      - '.github/workflows/terraform_*.yml'
+
+  pull_request:
+    branches:
+      - "dev"
+      - "stg"
+      - "uat"
+      - "main" #prod
+    paths:
+      - 'tf/**'
+      - 'cloud_functions/**'
+      - '.github/workflows/terraform_*.yml'
