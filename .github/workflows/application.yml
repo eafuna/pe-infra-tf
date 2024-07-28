@@ -37,8 +37,9 @@ jobs:
         run: |
           cd application
           ls
+          az acr list
 
-      - name: 'Build and push image'
-        uses: azure/docker-login@v1
-      - run: |
-            docker build . -t developmentdemoacr.azurecr.io/serverapp:${{ github.sha }}
+      # - name: 'Build and push image'
+      #   uses: azure/docker-login@v1
+      # - run: |
+      #       docker build . -t developmentdemoacr.azurecr.io/serverapp:${{ github.sha }}
