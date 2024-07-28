@@ -41,10 +41,10 @@ jobs:
         run: |
           cd application
           ls
-          docker build . ${{ github.sha }}
-          docker tag ${{ github.sha }} developmentdemoacr.azurecr.io/serverapp:${{ github.sha }}
+          docker build . -t serverapp:${{ github.sha }}
+          docker tag serverapp:${{ github.sha }} developmentdemoacr.azurecr.io/serverapp:${{ github.sha }}
           docker push developmentdemoacr.azurecr.io/serverapp:${{ github.sha }}
-          docker tag ${{ github.sha }} developmentdemoacr.azurecr.io/serverapp:latest
+          docker tag serverapp:${{ github.sha }} developmentdemoacr.azurecr.io/serverapp:latest
           docker push developmentdemoacr.azurecr.io/serverapp:latest
 
           az acr list
