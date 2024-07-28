@@ -21,6 +21,7 @@ on:
 jobs:
   prepare:
     runs-on: ubuntu-latest
+    if: ${{ !(github.ref == 'refs/heads/main') && (github.event_name == 'pull_request') }}    
     env:
       ARM_CLIENT_ID: ${{secrets.ARM_CLIENT_ID}}
       ARM_CLIENT_SECRET: ${{secrets.ARM_CLIENT_SECRET}}
@@ -51,8 +52,7 @@ jobs:
         # terraform init -backend-config=../backend/${{ env.environment }}.conf --var-file="../envs/${{ env.environment }}.tfvars;"
         # terraform plan --var-file="../envs/${{ env.environment }}.tfvars" -lock=false ...
       - name: Terraform check
-        #disables plan only when branch is not main
-        if: ${{ !(github.ref == 'refs/heads/main') }}
+        #disables plan only when branch is not main        
         run: |
           cd aks
           terraform init
