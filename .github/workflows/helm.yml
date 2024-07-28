@@ -32,7 +32,7 @@ jobs:
         with:
           sparse-checkout: 'helm'
           sparse-checkout-cone-mode: false
-
+      - name: Helm deployment simplified
         run: |
           cd helm
           ls
