@@ -1,13 +1,11 @@
-FROM python:3.10.13-slim-bullseye
+FROM python:3.7.11-slim
 
-ADD requirements.txt requirements.txt
+WORKDIR  /python-api
 
-ADD server.py server.py
+COPY requirements.txt requirements.txt
 
-RUN pip install -r requirements.txt --no-cache-dir
+RUN pip install -r requirements.txt
 
-ENTRYPOINT ["python3"]
-CMD ["server.py"]
+COPY . .
 
-# Run docker build -f Dockerfile . -t web-server-test
-# Run docker run -rm -p 8000:80 — name web-server-test web-server-test
+CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0"]
