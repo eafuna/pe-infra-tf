@@ -1,4 +1,4 @@
-# pe-infra-tf
+# aks
 Contains IaC for terraform on AKS
 
 
