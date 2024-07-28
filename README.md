@@ -1,6 +1,12 @@
 # HI, welcome   
 This repository contains bare and simple implementation of cicd for application and infrastructure.  
 
+#### POST DEADLINE MODIFICATIONS:
+- 7/29-4:00 Done update README and chart pullpolicy
+- 7/29-4:00 `CURRENTLY DOING` Update on `workflow` to: 
+    - provide some protection on my azure account if I set this repo to `public`
+    - facilitate `create` and `destroy` of the entire k8s associated resources 
+
 > [!IMPORTANT]
 > I intentionally did not use modules for these exercise since the purpose of this is for evaluation and not production.
 
