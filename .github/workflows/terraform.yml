@@ -51,13 +51,16 @@ jobs:
         # terraform init -backend-config=../backend/${{ env.environment }}.conf --var-file="../envs/${{ env.environment }}.tfvars;"
         # terraform plan --var-file="../envs/${{ env.environment }}.tfvars" -lock=false ...
       - name: Terraform check
+        #disables plan only when branch is not main
+        if: ${{ !github.ref == 'refs/heads/main') }}
         run: |
           cd aks
           terraform init
           terraform plan -lock=false
 
       - name: Terraform deploy
-        if: ${{ contains(github.event.head_commit.message, '#deploy') }}
+        # limit this run to main branch only
+        if: ${{ contains(github.event.head_commit.message, '#deploy') && (github.event_name == 'push' && github.ref == 'refs/heads/main') }}
               
         # Idealy this should be separated along with other options that will create based on environment
         # terraform apply --auto-approve --var-file="../envs/${{ env.environment }}.tfvars" -lock=false
