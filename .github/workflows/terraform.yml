@@ -1,6 +1,7 @@
 name: Terraform deploy
 
 on:
+  # idealy this should be prevented by protecting branches on github
   push:
     branches:
       - "main"
@@ -27,13 +28,10 @@ jobs:
       ARM_TENANT_ID: ${{secrets.ARM_TENANT_ID}} 
 
     steps:
-      # Checkout project code
-      # Use sparse checkout to only select files in mobile app directory
-      # Turning off cone mode ensures that files in the project root are not included during checkout
+      # Having issues here since I am using storage for terraform state
       # - uses: azure/login@v2
       #   with:
       #     creds: ${{ secrets.AZURE_CREDENTIALS }}
-
       # - name: Azure CLI script
       #   uses: azure/cli@v2
       #   with:
@@ -50,11 +48,12 @@ jobs:
         uses: hashicorp/setup-terraform@v1
       - name: Terraform simplified
               
+        # Idealy this should be separated along with other options that will create based on environment
         # terraform init -backend-config=../backend/${{ env.environment }}.conf --var-file="../envs/${{ env.environment }}.tfvars;"
         # terraform plan --var-file="../envs/${{ env.environment }}.tfvars" -lock=false ...
         # terraform apply --auto-approve --var-file="../envs/${{ env.environment }}.tfvars" -lock=false
         run: |
           cd aks
           terraform init
-          terraform apply --auto-approve
+          terraform destroy --auto-approve
           
