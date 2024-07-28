@@ -1,8 +1,8 @@
-# HI, welcome
+# HI, welcome   
 This repository contains bare and simple implementation of cicd for application and infrastructure.  
 
 > [!IMPORTANT]
-> Just for clarity I have re-used some codes from my other projects as well as internet resources. Nevertheless, I intentionally did not use modules for these exercise since the purpose of this is for evaluation and not production.
+> I intentionally did not use modules for these exercise since the purpose of this is for evaluation and not production.
 
 ## guthub secrets
 > [!NOTE]
