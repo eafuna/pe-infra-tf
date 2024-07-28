@@ -21,7 +21,6 @@ on:
 jobs:
   prepare:
     runs-on: ubuntu-latest
-    if: ${{ !(github.ref == 'refs/heads/main') && (github.event_name == 'pull_request') }}    
     env:
       ARM_CLIENT_ID: ${{secrets.ARM_CLIENT_ID}}
       ARM_CLIENT_SECRET: ${{secrets.ARM_CLIENT_SECRET}}
@@ -51,17 +50,22 @@ jobs:
 
         # terraform init -backend-config=../backend/${{ env.environment }}.conf --var-file="../envs/${{ env.environment }}.tfvars;"
         # terraform plan --var-file="../envs/${{ env.environment }}.tfvars" -lock=false ...
-      - name: Terraform check
-        #disables plan only when branch is not main        
+      - name: Terraform Init
         run: |
           cd aks
           terraform init
+
+      - name: Terraform check
+        if: ${{ !(github.ref == 'refs/heads/main') && (github.event_name == 'pull_request') }}    
+        #disables plan only when branch is not main        
+        run: |
+          cd aks
           terraform plan -lock=false
 
       - name: Terraform deploy
         # limit this run to main branch only
-        if: ${{ contains(github.event.head_commit.message, '#deploy') && (github.event_name == 'push' && github.ref == 'refs/heads/main') }}
-              
+        # if: ${{ contains(github.event.head_commit.message, '#deploy') && (github.event_name == 'push' && github.ref == 'refs/heads/main') }}
+        if: ${{ github.event.pull_request.merged }}
         # Idealy this should be separated along with other options that will create based on environment
         # terraform apply --auto-approve --var-file="../envs/${{ env.environment }}.tfvars" -lock=false
         run: |
@@ -73,7 +77,7 @@ jobs:
 
         run: |
           cd aks
-          terraform destroy
+          terraform destroy --auto-approve
 
   release:
     if: contains(github.event.head_commit.message, '#somerule')
