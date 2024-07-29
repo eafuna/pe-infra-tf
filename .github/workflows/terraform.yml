@@ -60,7 +60,7 @@ jobs:
           cd aks
           terraform plan -lock=false
           echo "${{ (github.event_name) }}"
-          echo "${{ (github.event_name) }}"
+          echo ${{ github.event.commits[0].message }}
           echo "${{ github.event.head_commit.message }}"
 
       - name: Terraform deploy
