@@ -9,12 +9,12 @@ on:
       - 'application/**'
       - '.github/workflows/application.yml'
 
-  pull_request:
-    branches:
-      - "main"
-    paths:
-      - 'application/**'
-      - '.github/workflows/application.yml'
+  # pull_request:
+  #   branches:
+  #     - "main"
+  #   paths:
+  #     - 'application/**'
+  #     - '.github/workflows/application.yml'
 
   workflow_dispatch:
    
