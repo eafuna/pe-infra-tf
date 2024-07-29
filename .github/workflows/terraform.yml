@@ -59,6 +59,9 @@ jobs:
         run: |
           cd aks
           terraform plan -lock=false
+          echo "${{ (github.event_name) }}"
+          echo "${{ (github.event_name) }}"
+          echo "${{ github.event.head_commit.message }}"
 
       - name: Terraform deploy
         if: ${{ (github.event_name == 'pull_request') && (contains(github.event.head_commit.message, '#destroy')) }}
