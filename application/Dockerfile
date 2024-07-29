@@ -1,11 +1,14 @@
-FROM python:3.7.11-slim
 
-WORKDIR  /python-api
+FROM python:3.11-alpine
 
-COPY requirements.txt requirements.txt
+COPY ./src /app
+
+WORKDIR /app
 
 RUN pip install -r requirements.txt
 
-COPY . .
+EXPOSE 4004
 
-CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0"]
+ENTRYPOINT ["python"]
+
+CMD ["app.py"]
