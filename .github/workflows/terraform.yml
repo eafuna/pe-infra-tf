@@ -4,7 +4,7 @@ on:
   # idealy this should be prevented by protecting branches on github
   push:
     # branches:
-    #   - "main"
+    #   - "main" x
     paths:
       - 'aks/**'
       - '.github/workflows/terraform.yml'
@@ -59,10 +59,12 @@ jobs:
         run: |
           cd aks
           terraform plan -lock=false
+          echo "${{ (github.event_name) }}"
+          echo ${{ github.ref }}
+          echo "${{ github.event.head_commit.message }}"
 
       - name: Terraform deploy
-        if: ${{ (github.event_name == 'pull_request') && (contains(github.event.head_commit.message, '#destroy')) }}
-
+        if: ${{ (github.event_name == 'push') && (contains(github.ref, 'aks-deploy')) && (contains(github.event.head_commit.message, '#deploy')) }}
         # Idealy this should be separated along with other options that will create based on environment
         # terraform apply --auto-approve --var-file="../envs/${{ env.environment }}.tfvars" -lock=false
         run: |
@@ -70,7 +72,7 @@ jobs:
           terraform apply --auto-approve -lock=true 
 
       - name: Terraform destroy
-        if: ${{ (github.event_name == 'pull_request') && (contains(github.event.head_commit.message, '#destroy')) }}
+        if: ${{ (github.event_name == 'push') && (contains(github.event.head_commit.message, '#destroy')) }}
 
         run: |
           cd aks
