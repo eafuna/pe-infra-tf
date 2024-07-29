@@ -56,16 +56,13 @@ jobs:
           terraform init
 
       - name: Terraform check
-        if: ${{ !(github.ref == 'refs/heads/main') && (github.event_name == 'pull_request') }}    
-        #disables plan only when branch is not main        
         run: |
           cd aks
           terraform plan -lock=false
 
       - name: Terraform deploy
-        # limit this run to main branch only
-        # if: ${{ contains(github.event.head_commit.message, '#deploy') && (github.event_name == 'push' && github.ref == 'refs/heads/main') }}
-        if: ${{ (github.event.pull_request.merged) && (contains(github.event.head_commit.message, '#deploy')) }}
+        if: ${{ (github.event_name == 'pull_request') && (contains(github.event.head_commit.message, '#destroy')) }}
+
         # Idealy this should be separated along with other options that will create based on environment
         # terraform apply --auto-approve --var-file="../envs/${{ env.environment }}.tfvars" -lock=false
         run: |
@@ -73,7 +70,7 @@ jobs:
           terraform apply --auto-approve -lock=true 
 
       - name: Terraform destroy
-        if: ${{ (github.event_name == 'push') && (contains(github.event.head_commit.message, '#destroy')) && !(github.ref == 'refs/heads/main') }}
+        if: ${{ (github.event_name == 'pull_request') && (contains(github.event.head_commit.message, '#destroy')) }}
 
         run: |
           cd aks
