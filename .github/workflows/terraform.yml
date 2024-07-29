@@ -4,7 +4,7 @@ on:
   # idealy this should be prevented by protecting branches on github
   push:
     # branches:
-    #   - "main" x
+    #   - "main"
     paths:
       - 'aks/**'
       - '.github/workflows/terraform.yml'
