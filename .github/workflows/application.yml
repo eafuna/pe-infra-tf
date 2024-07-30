@@ -19,13 +19,20 @@ on:
   workflow_dispatch:
    
 jobs:
-  application-deployment-simplified:
+  prepare:
     runs-on: ubuntu-latest
     steps:
       - uses: azure/login@v2
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}    
 
+      - name: test-az-cli
+        run: |
+          az acr credential show --name developmentdemoacr | jq '.passwords[0].value'
+
+  application-deployment-simplified:
+    runs-on: ubuntu-latest
+    steps:
       - uses: actions/checkout@v3
         with:
           sparse-checkout: 'application'
@@ -38,16 +45,16 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
              
-      - name: 'Build and push image'    
-        run: |
-          cd application
-          ls
-          docker build . -t serverapp:${{ github.sha }}
-          docker tag serverapp:${{ github.sha }} developmentdemoacr.azurecr.io/serverapp:${{ github.sha }}
-          docker push developmentdemoacr.azurecr.io/serverapp:${{ github.sha }}
-          docker tag serverapp:${{ github.sha }} developmentdemoacr.azurecr.io/serverapp:latest
-          docker push developmentdemoacr.azurecr.io/serverapp:latest
-          az acr list
+      # - name: 'Build and push image'    
+      #   run: |
+      #     cd application
+      #     ls
+      #     docker build . -t serverapp:${{ github.sha }}
+      #     docker tag serverapp:${{ github.sha }} developmentdemoacr.azurecr.io/serverapp:${{ github.sha }}
+      #     docker push developmentdemoacr.azurecr.io/serverapp:${{ github.sha }}
+      #     docker tag serverapp:${{ github.sha }} developmentdemoacr.azurecr.io/serverapp:latest
+      #     docker push developmentdemoacr.azurecr.io/serverapp:latest
+      #     az acr list
 
       # - name: 'Build and push image'
       #   uses: azure/docker-login@v1
