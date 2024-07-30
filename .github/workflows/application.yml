@@ -3,8 +3,8 @@ name: Application deployment
 on:
   # idealy this should be prevented by protecting branches on github
   push:
-    branches:
-      - "main"
+    # branches:
+    #   - "main"
     paths:
       - 'application/**'
       - '.github/workflows/application.yml'
